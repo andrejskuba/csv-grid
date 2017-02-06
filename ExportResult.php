@@ -144,6 +144,12 @@ class ExportResult extends Object
     public function delete()
     {
         if (!empty($this->_dirName)) {
+
+            // first remove files
+            foreach ($this->csvFiles as $csvFile) {
+                unlink($csvFile->name);
+            }
+
             $this->csvFiles = []; // allow running destructor of file objects first
             FileHelper::removeDirectory($this->_dirName);
             return true;
